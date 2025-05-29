@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>KONSER PARTY AMBYAR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 70px; /* Adjust based on navbar height */
+        }
+        body {
+            background-color: #ad8282ef; /* Deep dark blue/black */
+            color: #f1eeeeef; /* Off-white for softer text */
+            font-family: 'Roboto', sans-serif;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, .font-orbitron {
+            font-family: 'Orbitron', sans-serif; /* Futuristic font for titles */
+        }
+
+        /* Navbar */
+        .navbar-link {
+            position: relative;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-size: 0.8rem;
+        }
+        .navbar-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background-color: gray; /* Bright Cyan */
+            transition: width 0.3s ease-in-out;
+        }
+        .navbar-link:hover {
+            color: gray;
+            text-shadow: 0 0 5px gray;
+        }
+        .navbar-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero */
+        .hero-section {
+            background-image: linear-gradient(rgba(10, 10, 20, 0.9), rgba(10, 10, 20, 0.7)), url('https://images.tokopedia.net/blog-tokopedia-com/uploads/2017/12/Blog_Acara-Konser-Musik-Tahunan-di-Indonesia-buat-Pecinta-Musik.jpg'); /* Placeholder concert BG */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Parallax effect */
+        }
+        .hero-text-shadow {
+            text-shadow: 0 0 10px rgba(242, 245, 245, 0.92), 0 0 20px rgba(244, 245, 245, 0.929);
+        }
+        .hero-button {
+            background: linear-gradient(45deg, #00e0ff, #d47bbe);
+            box-shadow: 0 0 15px #f1f2f3, 0 0 30px #d47bbe;
+            transition: all 0.4s ease;
+        }
+        .hero-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 0 25px #00e0ff, 0 0 50px #d47bbe;
+        }
+        .hero-image-wrapper {
+            position: relative;
+            filter: drop-shadow(0 0 30px rgba(0, 224, 255, 0.5));
+        }
+        .hero-image-wrapper img {
+             border: 3px solid rgba(0, 224, 255, 0.3);
+             transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+         .hero-image-wrapper:hover img {
+            border-color: #00e0ff;
+            transform: scale(1.05) rotate(2deg);
+          }
+        .hero-image-wrapper::before, .hero-image-wrapper::after {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(45deg, #00e0ff, #7f00ff);
+            border-radius: 1.7rem; /* slightly larger than image */
+            z-index: -1;
+            filter: blur(15px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .hero-image-wrapper:hover::before, .hero-image-wrapper:hover::after {
+            opacity: 0.6;
+        }
+
+        /* Sound Wave Animation */
+        @keyframes wave {
+            0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+            50% { transform: scaleY(1.5); opacity: 1; }
+        }
+        .wave-bar {
+            width: 3px;
+            animation: wave 1s infinite ease-in-out alternate;
+            transform-origin: bottom;
+        }
+        .delay-1 { animation-delay: 0.1s; } .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; } .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; } .delay-6 { animation-delay: 0.6s; }
+        .delay-7 { animation-delay: 0.7s; }
+
+        /* Ticket Cards */
+        .ticket-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            backdrop-filter: blur(5px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .ticket-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0, 224, 255, 0.2);
+            border-color: white;
+        }
+        .ticket-card::before { /* Glow effect */
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 224, 255, 0.15) 0%, transparent 40%);
+            transform: rotate(0deg);
+            transition: transform 1s ease, opacity 0.5s ease;
+            opacity: 0;
+            z-index: 0;
+        }
+        .ticket-card:hover::before {
+            transform: rotate(360deg);
+            opacity: 1;
+        }
+        .ticket-card * { position: relative; z-index: 1; } /* Keep content above glow */
+
+        .vip-card {
+            background: linear-gradient(135deg, rgba(0, 224, 255, 0.1), rgba(127, 0, 255, 0.1));
+            border: 1px solid #7f00ff;
+        }
+        .vip-card:hover {
+             box-shadow: 0 10px 30px rgba(127, 0, 255, 0.3);
+             border-color: #a855f7; /* Purple */
+        }
+        .choose-btn {
+            background: rgba(0, 224, 255, 0.1);
+            border: 1px solid #00e0ff;
+            color: #00e0ff;
+        }
+         .choose-btn:hover {
+            background: #00e0ff;
+            color: #0a0a14;
+            box-shadow: 0 0 10px #00e0ff;
+          }
+        .vip-btn {
+            background: linear-gradient(45deg, #00e0ff, #7f00ff);
+            border: none;
+            color: white;
+        }
+        .vip-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px #00e0ff;
+        }
+
+        /* Gallery - UPDATED */
+        .gallery-img {
+            transition: all 0.4s ease;
+            filter: grayscale(50%) brightness(0.8);
+            border: 2px solid transparent;
+            object-fit: cover; /* Ensures images fill their space nicely */
+            height: 250px; /* Gives all images a consistent height for tidy rows */
+        }
+        .gallery-img:hover {
+            transform: scale(1.05);
+            filter: grayscale(0%) brightness(1);
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.4), 0 0 40px rgba(0, 224, 255, 0.2); /* Enhanced shadow */
+            border-color: #00e0ff;
+        }
+
+        /* Form */
+        .form-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 224, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #00e0ff;
+            box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+            outline: none;
+        }
+
+        /* Footer */
+        .footer-bg {
+            background: linear-gradient(to top, #000000, #0a0a14);
+            border-top: 1px solid rgba(0, 224, 255, 0.1);
+        }
+
+        /* Music Toggle - Dark/Elegant */ 
+        #musicControlPanel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            background: rgba(6, 6, 243, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border: 1px solid rgba(0, 224, 255, 0.2);
+            z-index: 1000;
+        }
+        #toggleArrow, #musicBtn {
+            width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            background: #00e0ff; color: #0a0a14; font-weight: bold;
+            transition: all 0.3s ease; box-shadow: 0 0 8px rgba(0, 224, 255, 0.5);
+        }
+        #toggleArrow:hover, #musicBtn:hover {
+            transform: scale(1.1); box-shadow: 0 0 15px rgba(0, 224, 255, 0.8);
+        }
+        #musicBtn {
+            margin-left: 8px; transform: scale(0); opacity: 0;
+        }
+        #musicBtn.show { transform: scale(1); opacity: 1; }
+        #musicBtn.playing { background: #7f00ff; color: white; box-shadow: 0 0 8px rgba(127, 0, 255, 0.5); }
+        #musicBtn.show:hover { transform: scale(1.1); } /* Re-apply hover for show state */
+    </style>
+</head>
+<body>
+
+    <header class="bg-black bg-opacity-30 fixed w-full z-50 backdrop-blur-md transition-all duration-300 border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3 group">
+                <img src="ChatGPT Image May 28, 2025, 08_29_28 AM.png" alt="MAYANGKARA GROUP \Logo" class="w-10 h-10 rounded-full shadow-lg group-hover:animate-pulse group-hover:shadow-cyan-400/50 transition-shadow">
+                <span class="text-xl font-bold tracking-wider font-orbitron text-white group-hover:text-cyan-400 transition">MAYANGKARA GROUP</span>
+            </div>
+            <nav class="hidden md:flex gap-8 text-white">
+                <a href="#home" class="navbar-link">Home</a>
+                <a href="#tickets" class="navbar-link">Tickets</a>
+                <a href="#gallery" class="navbar-link">Gallery</a>
+                <a href="#order" class="navbar-link">Order</a>
+            </nav>
+            <button class="md:hidden text-white text-2xl"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <section id="home" class="relative h-screen hero-section flex items-center justify-center">
+        <div class="relative z-10 max-w-7xl mx-auto w-full px-6 flex flex-col md:flex-row items-center justify-between gap-20">
+            <div class="text-center md:text-left flex-1" data-aos="fade-right" data-aos-duration="1200">
+                <div class="flex justify-center md:justify-start gap-1.5 mb-6 h-12 items-end">
+                    <div class="w-1.5 h-6 bg-cyan-500 wave-bar"></div>
+                    <div class="w-1.5 h-10 bg-cyan-400 wave-bar delay-1"></div>
+                    <div class="w-1.5 h-4 bg-cyan-300 wave-bar delay-2"></div>
+                    <div class="w-1.5 h-8 bg-cyan-400 wave-bar delay-3"></div>
+                    <div class="w-1.5 h-5 bg-cyan-500 wave-bar delay-4"></div>
+                    <div class="w-1.5 h-7 bg-cyan-400 wave-bar delay-5"></div>
+                    <div class="w-1.5 h-9 bg-cyan-300 wave-bar delay-6"></div>
+                    <div class="w-1.5 h-6 bg-cyan-500 wave-bar delay-7"></div>
+                </div>
+                <h1 class="text-6xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight hero-text-shadow">
+                    NIKEN SALINDRY
+                </h1>
+                <p class="text-2xl text-gray-200 mb-10 font-medium tracking-wide">Live in Salatiga april 30, 2025</p>
+                <a href="#tickets" class="hero-button text-white px-10 py-4 rounded-full text-lg font-bold transition duration-300 ease-in-out inline-block">
+                    GET YOUR TICKETS NOW <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+            <div class="hidden md:block flex-1" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="200">
+                <div class="hero-image-wrapper">
+                    <img src="mayangkara-removebg-preview.png" alt="Niken Salindry" class="rounded-3xl shadow-2xl w-full max-w-md mx-auto relative z-10">
+                </div>
+            </div>
+        </div>
+           <div class="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-[#0a0a14] to-transparent"></div> </section>
+
+    <section class="py-24 px-6 max-w-6xl mx-auto" data-aos="fade-up">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4 tracking-tighter">Event <span class="text-blach-400">Details</span></h2>
+            <p class="text-softpink-400 max-w-lg mx-auto">Prepare yourself for an immersive audiovisual journey with Mayangkara Group.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-10 text-center">
+            <div class="bg-gray-800/50 p-8 rounded-2xl shadow-lg border border-white/10 transition hover:scale-105 duration-300 hover:border-pink-400/50 hover:shadow-pink-500/10" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-semibold mb-2">Location</h3>
+                <p class="text-soft poink-300">Alun alun Pancasila</p>
+            </div>
+            <div class="bg-gray-800/50 p-8 rounded-2xl shadow-lg border border-white/10 transition hover:scale-105 duration-300 hover:border-pink-400/50 hover:shadow-cyan-500/10" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="text-2xl font-semibold mb-2">Date</h3>
+                <p class="text-soft pink-300">Saturday, April 30, 2025</p>
+            </div>
+            <div class="bg-gray-800/50 p-8 rounded-2xl shadow-lg border border-white/10 transition hover:scale-105 duration-300 hover:border-cyan-400/50 hover:shadow-cyan-500/10" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-2xl font-semibold mb-2">Time</h3>
+                <p class="text-soft pink-300">Gate Open 5 PM | Show 7 PM</p>
+            </div>
+        </div>
+    </section>
+
+<section id="tickets" class="py-24 px-6 bg-pink-100" data-aos="zoom-in-up">
+    <div class="max-w-6xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 tracking-tighter text-pink-700">Choose Your <span class="text-pink-500">Experience</span></h2>
+        <div class="grid md:grid-cols-3 gap-10 items-end">
+            <div class="ticket-card p-8 rounded-3xl text-center bg-white shadow-md" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-bold mb-4 text-pink-700">REGULAR 🥉</h3>
+                <p class="text-4xl font-black text-pink-500 mb-3">Rp 500<span class="text-xl">.000</span></p>
+                <ul class="text-pink-400 mb-8 space-y-2 text-sm">
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Standing Area Access</li>
+                    <li><i class="fas fa-times text-pink-600 mr-2"></i>Merchandise</li>
+                    <li><i class="fas fa-times text-pink-600 mr-2"></i>Meet & Greet</li>
+                </ul>
+                <a href="#order" class="bg-pink-500 text-white px-8 py-3 rounded-full font-semibold transition duration-300 inline-block w-full hover:bg-pink-600">Choose Plan</a>
+            </div>
+            <div class="ticket-card vip-card p-8 rounded-3xl text-center border-2 border-pink-500 shadow-pink-500/20 shadow-2xl transform md:scale-110 bg-white" data-aos="fade-up" data-aos-delay="200">
+                <div class="absolute top-0 right-0 bg-pink-500 text-white text-xs font-bold px-4 py-1 rounded-bl-lg rounded-tr-2xl">MOST POPULAR</div>
+                <h3 class="text-2xl font-bold mb-4 text-pink-700">VIP 🥈</h3>
+                <p class="text-4xl font-black text-pink-500 mb-3">Rp 1.000<span class="text-xl">.000</span></p>
+                <ul class="text-pink-400 mb-8 space-y-2 text-sm">
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Front Stage Access</li>
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Exclusive Merchandise</li>
+                    <li><i class="fas fa-times text-pink-300 mr-2"></i>Meet & Greet</li>
+                </ul>
+                <a href="#order" class="bg-pink-500 text-white px-8 py-3 rounded-full font-semibold transition duration-300 inline-block w-full hover:bg-pink-600">Choose Plan</a>
+            </div>
+            <div class="ticket-card p-8 rounded-3xl text-center bg-white shadow-md" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="text-2xl font-bold mb-4 text-pink-700">VVIP 🥇</h3>
+                <p class="text-4xl font-black text-pink-500 mb-3">Rp 2.000<span class="text-xl">.000</span></p>
+                <ul class="text-pink-400 mb-8 space-y-2 text-sm">
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Front Stage Access</li>
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Full Merchandise Pack</li>
+                    <li><i class="fas fa-check text-pink-500 mr-2"></i>Meet & Greet + Backstage Pass</li>
+                </ul>
+                <a href="#order" class="bg-pink-500 text-white px-8 py-3 rounded-full font-semibold transition duration-300 inline-block w-full hover:bg-pink-600">Choose Plan</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section id="gallery" class="py-24 px-6 max-w-6xl mx-auto" data-aos="fade-up">
+        <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 tracking-tighter">Feel The <span class="text-cyan-400">Vibe</span></h2>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6"> <img src="salindry" alt="Alan Walker" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="100">
+            <img src="foto1.webp" alt="Alan Walker Concert" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="200">
+            <img src="foto2.jpg" alt="Alan Walker Live" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="300">
+            <img src="foto4.jpg" alt="Alan Walker" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="400">
+            <img src="n&l.jpg" alt="Alan Walker Live" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="500">
+            <img src="p.jpg" alt="Alan Walker Concert" class="gallery-img rounded-xl shadow-lg w-full" data-aos="zoom-in" data-aos-delay="600">
+        </div>
+    </section>
+
+    <section id="order" class="py-24 px-6 bg-black/30" data-aos="fade-up">
+        <div class="max-w-2xl mx-auto bg-gray-900/50 p-10 rounded-3xl border border-white/10 shadow-2xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 tracking-tighter">Book Your Spot <span class="text-cyan-400">Now!</span></h2>
+            <form class="space-y-6">
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Full Name</label>
+                    <input type="text" class="w-full p-3 rounded-lg form-input text-white" placeholder="Your Name">
+                </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Email Address</label>
+                    <input type="email" class="w-full p-3 rounded-lg form-input text-white" placeholder="you@example.com">
+                </div>
+                   <div>
+                     <label class="block mb-2 text-sm font-medium text-gray-300">Phone Number</label>
+                     <input type="tel" class="w-full p-3 rounded-lg form-input text-white" placeholder="+62 812 3456 7890">
+                 </div>
+                <div>
+                    <label class="block mb-2 text-sm font-medium text-gray-300">Ticket Type</label>
+                    <select class="w-full p-3 rounded-lg form-input text-white appearance-none">
+                        <option class="bg-gray-800">Regular🥉 - Rp 500.000</option>
+                        <option class="bg-gray-800">VIP🥈 - Rp 1.000.000</option>
+                        <option class="bg-gray-800">VVIP🥇 - Rp 2.000.000</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-pink-200 text-pink-800 p-4 rounded-lg font-bold transition duration-300 text-lg hover:bg-pink-300">
+  SUBMIT ORDER
+</button>
+
+            </form>
+        </div>
+    </section>
+
+<footer class="bg-pink-100 pt-16 pb-10 mt-20">
+    <div class="max-w-7xl mx-auto px-6 text-center" data-aos="fade-up">
+        <img src="ChatGPT Image May 28, 2025, 08_29_28 AM.png" alt="mayangkara group Logo" class="w-16 h-16 mx-auto mb-4 rounded-full">
+        <h2 class="text-3xl font-semibold text-pink-600 mb-6 font-orbitron">MAYANGKARA GROUP</h2>
+        <div class="flex justify-center space-x-6 mb-8">
+            <a href="#" class="text-pink-500 hover:text-pink-700 transition text-2xl"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="text-pink-500 hover:text-pink-700 transition text-2xl"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="text-pink-500 hover:text-pink-700 transition text-2xl"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="text-pink-500 hover:text-pink-700 transition text-2xl"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="text-pink-500 hover:text-pink-700 transition text-2xl"><i class="fab fa-spotify"></i></a>
+        </div>
+        <p class="text-pink-700 text-sm">© 2025 MAYANGKARA GROUP.</p>
+        <p class="text-pink-600 text-xs mt-2">This is a concept design. Please refer to official sources for actual event details.</p>
+    </div>
+</footer>
+
+
+    <audio id="bgm" src="MP3.mp3" loop></audio>
+    <div id="musicControlPanel">
+        <button id="toggleArrow">▶</button>
+        <button id="musicBtn">🎵</button>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true, offset: 50 });
+
+        const toggleArrow = document.getElementById('toggleArrow');
+        const musicBtn = document.getElementById('musicBtn');
+        const bgm = document.getElementById('bgm');
+        let panelVisible = false;
+
+        toggleArrow.addEventListener('click', () => {
+            panelVisible = !panelVisible;
+            musicBtn.classList.toggle('show');
+            toggleArrow.innerHTML = panelVisible ? '◀' : '▶';
+        });
+
+        musicBtn.addEventListener('click', () => {
+            if (bgm.paused) {
+                bgm.play().catch(e => console.error("Audio play failed:", e));
+                musicBtn.innerHTML = '⏸';
+                musicBtn.classList.add('playing');
+            } else {
+                bgm.pause();
+                musicBtn.innerHTML = '🎵';
+                musicBtn.classList.remove('playing');
+            }
+        });
+    </script>
+</body>
+</html>
